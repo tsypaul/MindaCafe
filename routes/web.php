@@ -15,11 +15,11 @@ use App\Http\Controllers\HomeController;
 */
 
 Route::get('/', function () {
-    return view('home');
+    return redirect('/locale/en');
 });
+
+Route::get('/locale/{lang}', 'App\Http\Controllers\LocaleController@index');
 
 Auth::routes();
 
-Route::get('/checkout', [CheckoutController::class, 'index']);
-
-
+// Route::get('/checkout', [CheckoutController::class, 'index']);

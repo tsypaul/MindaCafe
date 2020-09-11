@@ -1,0 +1,16 @@
+{
+    "Name": "名字",
+    "Login": "登陆",
+    "Register": "注册",
+    "Logout": "注销",
+    "E-Mail Address": "",
+    "Password": "密码",
+    "Remember Me": "",
+    "Forgot Your Password?": "",
+    "Confirm Password": "",
+    "Reset Password": "",
+    "Send Password Reset Link": "",
+    "Verify Your Email Address": "",
+    "Dashboard": "控制台",
+    "You are logged in!": "您已登陆！"
+}

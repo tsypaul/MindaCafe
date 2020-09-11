@@ -3,7 +3,9 @@
 namespace App\Console\Commands;
 
 use App\Models\User;
+use Exception;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Hash;
 use PhpParser\Node\Expr\FuncCall;
 
 class RegisterAdminCommand extends Command
@@ -45,7 +47,12 @@ class RegisterAdminCommand extends Command
     {
         $info = $this->getUserInfo();
 
-        $admin_user = $this->user->createAdmin($info);
+        try {
+            $this->user->createAdmin($info);
+        } catch (Exception $e) {
+            $this->error("User or email exists");
+            $this->handle();
+        }
 
         $this->info("New admin user created");
     }
@@ -55,10 +62,10 @@ class RegisterAdminCommand extends Command
         $info['name'] = $this->ask('name');
         $info['email'] = $this->ask('email');
         $info['password'] = $this->secret('password');
-        $info['confirm_password'] = $this->secret('confirm_password');
+        $confirm_pwd = $this->secret('confirm_password');
 
-        while (!($this->isMatch($info['password'], $info['confirm_password']) && $this->checkLength($info['password']))) {
-            if (!$this->isMatch($info['password'], $info['confirm_password'])) {
+        while (!($this->isMatch($info['password'], $confirm_pwd) && $this->checkLength($info['password']))) {
+            if (!$this->isMatch($info['password'], $confirm_pwd)) {
                 $this->error("Passwords do not match");
             }
 
@@ -67,8 +74,10 @@ class RegisterAdminCommand extends Command
             }
 
             $info['password'] = $this->secret('password');
-            $info['confirm_password'] = $this->secret('confirm_password');
+            $confirm_pwd = $this->secret('confirm_password');
         }
+
+        $info['password'] = Hash::make($info['password']);
 
         return $info;
     }

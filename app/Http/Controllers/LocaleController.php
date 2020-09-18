@@ -10,6 +10,6 @@ class LocaleController extends Controller
     public function index($lang)
     {
         App::setLocale($lang);
-        return view('home');
+        return view('home', compact('lang'));
     }
 }

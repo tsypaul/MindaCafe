@@ -1,0 +1,24 @@
+.background1 {
+    background: linear-gradient(transparent, white), url("/img/background.jpg");
+    background-size: cover;
+    background-attachment: fixed;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+}
+
+.background2 {
+    background: linear-gradient(white, transparent), url("/img/background2.jpg");
+    background-size: cover;
+    background-attachment: fixed;
+    height: 100vh;
+    position: absolute;
+    top: 100vh;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+}

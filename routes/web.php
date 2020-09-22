@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\HomeController;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,12 +14,19 @@ use App\Http\Controllers\HomeController;
 |
 */
 
-Route::get('/', function () {
-    return redirect('/locale/en');
+Route::group(['prefix' => '{locale}', 'where' => ['locale' => '[a-zA-Z]{2}'], 'middleware' => 'setlocale'], function () {
+    Route::get('/', function () {
+        return view('home');
+    })->name('/');
+
+    Auth::routes();
 });
 
-Route::get('/locale/{lang}', 'App\Http\Controllers\LocaleController@index');
+Route::get('/', function () {
+    return redirect(app()->getLocale());
+});
 
-Auth::routes();
+
+Route::get('/admin', 'App\Http\Controllers\AdminController@index')->name('admin');
 
 // Route::get('/checkout', [CheckoutController::class, 'index']);
